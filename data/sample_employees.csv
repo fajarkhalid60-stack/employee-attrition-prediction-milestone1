@@ -1,0 +1,16 @@
+Age,Gender,BusinessTravel,Department,DistanceFromHome,Education,EducationField,EnvironmentSatisfaction,JobInvolvement,JobLevel,JobRole,JobSatisfaction,MaritalStatus,MonthlyIncome,NumCompaniesWorked,OverTime,PercentSalaryHike,PerformanceRating,RelationshipSatisfaction,StockOptionLevel,TotalWorkingYears,TrainingTimesLastYear,WorkLifeBalance,YearsAtCompany,YearsInCurrentRole,YearsSinceLastPromotion,YearsWithCurrManager
+56,Female,Travel_Frequently,Research & Development,19,5,Technical Degree,3,4,2,Sales Executive,1,Single,10434.0,0,Yes,18,3,4,3,36,4,1,33,32,4,29
+46,Male,Travel_Rarely,Research & Development,22,3,Other,2,4,4,Research Director,1,Single,12575.0,0,No,14,4,3,3,23,0,3,23,21,2,21
+32,Female,Travel_Rarely,Research & Development,23,4,Technical Degree,2,3,5,Laboratory Technician,4,Single,11180.0,4,No,24,4,2,2,10,3,2,10,7,1,7
+60,Male,Travel_Rarely,Research & Development,22,1,Human Resources,1,4,3,Sales Representative,1,Single,13553.0,2,No,13,3,4,3,41,0,4,39,37,3,37
+25,Female,Travel_Rarely,Sales,14,4,Other,4,1,1,Healthcare Representative,3,Divorced,2705.0,3,Yes,24,3,1,3,4,3,1,2,0,2,0
+38,Male,Travel_Rarely,Human Resources,6,5,Technical Degree,2,1,4,Healthcare Representative,1,Divorced,10190.0,2,Yes,19,3,3,1,15,0,4,9,6,6,9
+56,Male,Travel_Rarely,Research & Development,6,5,Human Resources,4,4,5,Sales Representative,2,Single,15577.0,0,Yes,13,3,4,3,33,5,2,32,32,1,30
+36,Female,Travel_Rarely,Research & Development,13,1,Marketing,2,4,4,Human Resources,2,Married,10091.0,0,Yes,19,3,4,0,17,4,2,10,8,1,6
+40,Female,Travel_Rarely,Sales,19,3,Technical Degree,4,3,5,Healthcare Representative,4,Single,13540.0,4,No,23,3,3,3,19,3,2,16,16,2,14
+28,Female,Travel_Rarely,Sales,22,2,Other,3,2,5,Sales Executive,2,Divorced,12576.0,5,No,12,3,4,3,6,6,3,3,1,2,3
+28,Male,Travel_Rarely,Sales,8,1,Medical,4,4,3,Sales Executive,3,Divorced,7805.0,2,Yes,24,4,3,2,10,2,3,3,1,1,0
+41,Female,Travel_Rarely,Research & Development,27,2,Technical Degree,3,1,5,Research Scientist,1,Married,13225.0,8,Yes,12,4,2,0,20,0,4,14,14,3,13
+53,Male,Travel_Rarely,Research & Development,27,2,Medical,3,3,4,Manager,4,Divorced,13668.0,4,Yes,12,3,3,3,34,0,4,29,29,4,27
+57,Male,Travel_Frequently,Research & Development,2,3,Human Resources,4,4,5,Human Resources,1,Single,16515.0,7,No,16,3,3,3,34,3,1,29,27,1,29
+41,Male,Travel_Rarely,Sales,21,2,Marketing,3,1,3,Research Director,1,Married,8236.0,0,No,13,3,3,1,19,2,1,13,12,3,12

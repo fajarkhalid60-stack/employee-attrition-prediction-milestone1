@@ -1,3 +1,15 @@
+"""
+train.py
+---------
+Trains the employee attrition classifier end-to-end and serializes the
+resulting model bundle with Joblib.
+
+Usage
+-----
+    python train.py
+    python train.py --real-data data/HR_Attrition.csv
+"""
+
 import argparse
 import os
 import numpy as np
@@ -26,9 +38,6 @@ BUSINESS_TRAVEL = ["Travel_Rarely", "Travel_Frequently", "Non-Travel"]
 
 
 def generate_synthetic_dataset(n=1470):
-    """Generate a synthetic dataset mirroring the schema and documented
-    behavioral patterns of the IBM HR Analytics Employee Attrition dataset
-    used in Milestones 1-3."""
     age = np.random.randint(18, 61, n)
     total_working_years = np.clip((age - 18) - np.random.randint(0, 6, n), 0, None)
     years_at_company = np.clip(total_working_years - np.random.randint(0, 8, n), 0, None)
@@ -103,8 +112,8 @@ def generate_synthetic_dataset(n=1470):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--real-data", type=str, default=None, help="Path to a real HR Attrition CSV (optional).")
-    parser.add_argument("--n", type=int, default=1470, help="Rows of synthetic data to generate if no real data given.")
+    parser.add_argument("--real-data", type=str, default=None)
+    parser.add_argument("--n", type=int, default=1470)
     args = parser.parse_args()
 
     if args.real_data and os.path.exists(args.real_data):
@@ -117,13 +126,9 @@ def main():
         df.to_csv("data/HR_Attrition_synthetic.csv", index=False)
         print("Synthetic dataset saved to data/HR_Attrition_synthetic.csv")
 
-    quality = check_data_quality(df)
-    print(f"Data quality check: {quality}")
+    print(f"Data quality check: {check_data_quality(df)}")
 
-    
     df = engineer_features(df)
-
-    
     df_encoded, encoders = preprocess(df, encoders=None, reference_columns=None)
 
     target_col = "Attrition"
@@ -133,25 +138,20 @@ def main():
 
     print(f"Final feature matrix shape: {X.shape}")
 
-    
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=RANDOM_STATE, stratify=y
     )
 
-    
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    
     smote_tomek = SMOTETomek(random_state=RANDOM_STATE)
     X_train_bal, y_train_bal = smote_tomek.fit_resample(X_train_scaled, y_train)
 
-    
     model = LogisticRegression(max_iter=1000, random_state=RANDOM_STATE)
     model.fit(X_train_bal, y_train_bal)
 
-    
     y_pred = model.predict(X_test_scaled)
     metrics = {
         "accuracy": round(accuracy_score(y_test, y_pred), 4),
@@ -166,14 +166,10 @@ def main():
         print(f"{k.capitalize():10s}: {v}")
     print(f"Confusion Matrix: {cm}")
 
-    
     os.makedirs("models", exist_ok=True)
     bundle = {
-        "model": model,
-        "scaler": scaler,
-        "encoders": encoders,
-        "feature_columns": feature_columns,
-        "metrics": metrics,
+        "model": model, "scaler": scaler, "encoders": encoders,
+        "feature_columns": feature_columns, "metrics": metrics,
         "confusion_matrix": cm,
         "trained_on": "real_data" if (args.real_data and os.path.exists(args.real_data)) else "synthetic_data",
     }

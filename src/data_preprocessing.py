@@ -10,10 +10,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 
-# Columns that are constant/identifier-only in the original Kaggle dataset
-# and carry no predictive information (kept here for reference / real-data use).
 CONSTANT_COLUMNS = ["EmployeeCount", "StandardHours", "Over18", "EmployeeNumber"]
-
 BINARY_COLUMNS = ["Attrition", "Gender", "OverTime"]
 MULTICLASS_COLUMNS = ["BusinessTravel", "Department", "EducationField", "JobRole", "MaritalStatus"]
 
@@ -29,8 +26,7 @@ NUMERIC_COLUMNS = [
 
 def load_data(path: str) -> pd.DataFrame:
     """Load the raw HR Attrition CSV from disk."""
-    df = pd.read_csv(path)
-    return df
+    return pd.read_csv(path)
 
 
 def drop_constant_columns(df: pd.DataFrame) -> pd.DataFrame:
@@ -48,12 +44,8 @@ def check_data_quality(df: pd.DataFrame) -> dict:
     }
 
 
-def encode_binary_columns(df: pd.DataFrame, encoders: dict = None) -> tuple[pd.DataFrame, dict]:
-    """
-    Label-encode binary categorical columns (Attrition, Gender, OverTime).
-    If `encoders` is provided (at inference time), reuse the fitted encoders
-    instead of fitting new ones, to keep train/inference encoding consistent.
-    """
+def encode_binary_columns(df: pd.DataFrame, encoders: dict = None):
+    """Label-encode binary categorical columns (Attrition, Gender, OverTime)."""
     df = df.copy()
     encoders = encoders or {}
     for col in BINARY_COLUMNS:
@@ -70,28 +62,16 @@ def encode_binary_columns(df: pd.DataFrame, encoders: dict = None) -> tuple[pd.D
 
 
 def encode_multiclass_columns(df: pd.DataFrame, reference_columns: list = None) -> pd.DataFrame:
-    """
-    One-hot encode multi-class categorical columns.
-    If `reference_columns` is provided (the exact columns seen during training),
-    the output is reindexed to match them exactly — filling missing dummy
-    columns with 0 and dropping any unseen categories, so a single row of
-    inference data produces a feature vector compatible with the trained model.
-    """
+    """One-hot encode multi-class categorical columns, aligned to reference_columns if given."""
     cols_present = [c for c in MULTICLASS_COLUMNS if c in df.columns]
     df = pd.get_dummies(df, columns=cols_present, drop_first=True)
-
     if reference_columns is not None:
         df = df.reindex(columns=reference_columns, fill_value=0)
-
     return df
 
 
 def preprocess(df: pd.DataFrame, encoders: dict = None, reference_columns: list = None):
-    """
-    Full preprocessing pipeline: drop constant columns, encode binary and
-    multi-class categoricals. Used identically during training and inference
-    (with `encoders`/`reference_columns` supplied at inference time).
-    """
+    """Full preprocessing pipeline used identically at train and inference time."""
     df = drop_constant_columns(df)
     df, encoders = encode_binary_columns(df, encoders)
     df = encode_multiclass_columns(df, reference_columns)
